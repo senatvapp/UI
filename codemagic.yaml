@@ -1,0 +1,17 @@
+workflows:
+  ios_ui_build:
+    name: Build SwiftUI Project
+    environment:
+      xcode: latest
+    scripts:
+      - name: Install dependencies
+        script: swift package resolve
+      - name: Build iOS app
+        script: xcodebuild -scheme MyApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14'
+      - name: Run UI tests
+        script: xcodebuild test -scheme MyApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14'
+    artifacts:
+      - build/ios
+    cache:
+      cache_paths:
+        - .build
